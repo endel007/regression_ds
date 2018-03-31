@@ -1,0 +1,219 @@
+---
+title: "Linear_Regression"
+author: "Enrique J. De La Hoz."
+date: "30 de marzo de 2018"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+  beamer_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Regression
+
+Regression: Predict a numerical outcome ('dependent variable') from a set of inputs ('independent variables').
+
+* Statistical Approach: Predicting the expected value of the outcome
+
+* Casual Sense: Predicting a numeric outcome, rather than a discrete one.
+
+## What is a regression?
+
+- How many units will we sell? (**Regression**)
+- Will this customer buy our product (yes/no)? (**Classification**)
+- What price will the customer pay for our product? (**Regression**)
+
+## Example: Predict Temperature from Chirp Rate
+
+```{r echo = FALSE}
+library(ggplot2)
+cri<- readRDS('cricket.rds')
+ggplot(cri, aes(chirps_per_sec, temperature))+ geom_point()
+
+```
+
+
+## Predict Temperature from Chirp Rate
+
+```{r echo = FALSE}
+library(ggplot2)
+cri<- readRDS('cricket.rds')
+ggplot(cri, aes(chirps_per_sec, temperature))+ geom_point()+  geom_smooth(method ="lm", se = FALSE) 
+
+```
+
+## Regression from a Machine Learning approach
+
+* Scientific mindset: Modeling to understand the data generation process
+
+* Engineering mindset: Modeling to predict accurately
+
+Machine Learning: Engineering mindset
+
+## Linear Regression
+
+$$ y = \beta_0x_1 + \beta_1x_1 + \beta_2x_2 + ...$$
+
+* y is linearly related to each $x_i$
+
+* Each $x_i$ contributes additively to y
+
+## Linear Regression in R: lm()
+
+```{r eval= FALSE, echo=TRUE}
+
+cmodel<- lm(temperature ~ chirps_per_sec, data = cricket)
+```
+
+* formula: temperature ~ chirps_per_sec
+* dat frame: cricket
+
+## Exercise
+
+```{r eval= FALSE, echo=TRUE}
+# Load unemployment dataset in the workspace
+readRDS()
+
+# Define a formula to express female_unemployment as a function of
+# male_unemployment
+fmla <- 
+
+# Print it
+
+
+# Use the formula to fit a model: unemployment_model
+unemployment_model <- lm(  , data = )
+
+# Print it
+
+```
+
+## Reading the results
+```{r echo=FALSE, warning= FALSE}
+
+library(broom)
+library(sigr)
+
+```
+
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+unemployment<- readRDS('unemployment.rds')
+unemployment_model <- lm(female_unemployment 
+                         ~ male_unemployment , data = unemployment)
+# Install packages broom and sigr and Call summary().
+summary(unemployment_model)
+```
+
+## A better presentation of the results
+
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+# Call glance() on unemployment_model to see the details
+# in a tidier form
+glance(unemployment_model)
+```
+
+## Another example
+
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+# bloodpressure is in the workspace
+bloodpressure <- readRDS('bloodpressure.rds')
+summary(bloodpressure)
+# Create the formula and print it
+fmla <- blood_pressure ~ age + weight
+
+# Fit the model: bloodpressure_model
+bloodpressure_model <- lm(fmla, data= bloodpressure)
+
+# Print bloodpressure_model and call summary() 
+```
+
+## Interpretation
+
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+# Interpretating the summary() 
+bloodpressure_model$coefficients
+
+```
+ One of the advantages of linear regression is that you can interpret the effects of each variable on the input – to a certain extent. In this case the coefficients for both age and weight are positive, which indicates that bloodpressure tends to increase as both age and weight increase.
+ 
+ 
+## Visualization of the results
+
+```{r eval= TRUE, echo=FALSE, message = FALSE, warning=FALSE}
+bloodpressure$prediction <- predict(bloodpressure_model)
+```
+
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+ggplot(bloodpressure, aes(x=prediction,
+y = blood_pressure )) + geom_point()+
+geom_abline(color = "blue")
+```
+ 
+## Pros and Cons of Linear Regression
+
+**Pros**
+
+* Easy to fit and to apply
+* Concise
+* Less prone to overfitting
+ 
+## Pros and Cons of Linear Regression
+
+**Pros**
+
+* Easy to fit and to apply
+* Concise
+* Less prone to overfitting
+* **Interpretable**
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+ lm(formula = blood_pressure ~ age + weight, data = bloodpressure)
+
+```
+
+
+## Pros and Cons of Linear Regression
+
+**Pros**
+
+* Easy to fit and to apply
+* Concise
+* Less prone to overfitting
+* Interpretable
+
+**Cons**
+
+* Can only express linear and additive relationships
+
+## Collinearity
+
+* **Colinearity**: when input variables are partially correlated.
+
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+ lm(formula = blood_pressure ~ age + weight, data = bloodpressure)
+
+```
+
+## Collinearity
+
+* **Colinearity**: when input variables are partially correlated.
+
+* Coefficients might change sign
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+ lm(formula = blood_pressure ~ age + weight, data = bloodpressure)
+
+```
+
+
+
+* **Colinearity**: when input variables are partially correlated.
+
+* Coefficients might change sign
+    + Coefficients (or SE) too large
+    + Model may be unsatble
+```{r eval= TRUE, echo=TRUE, message = FALSE, warning=FALSE}
+ lm(formula = blood_pressure ~ age + weight, data = bloodpressure)
+
+```

@@ -1,0 +1,42 @@
+---
+title: "Taller Regression"
+author: "Data Science - UTB"
+date: "2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Descripción
+
+En esta actividad se utilizara el conjunto de datos *mpg* contenido en el paquete ggplot2. Los datos describen las caracteriticas de varias marcas y modelos de carros de diferentes años. El objetivo es predecir la eficiencia del combustible en la ciuda a traves de la eficiencia del combustible en carretera.
+
+* Cargar los datos (recordar que estan contenidos en GGPLOT2)
+* Realizar un resumen del dataset y hacer comentarios al respecto
+* Cuales son las dimensiones del dataset?
+* Cuantas filas tiene el dataset?
+* Crear dos nuevos dataset, mpg_train (75% de las observaciones) y mpg_test (25% de las observacoines).
+* Crear un objeto llamado fmla, donde se exprese la eficiencia en ciudad (cty) como una función de la eficiencia en carretera (hwy).
+* Usar lm() para construir el modelo *mpg_model* utilizando mpg_train para predecir cty a partir de hwy
+* Usar summary() para el modelo construido y hacer comentarios al respecto.
+* Predecir los valores de cty a partir de hwy para los datos de entrenamiento
+* Predecir los valores de cty a partir de hwy para los datos de test.
+* Calcular RSME para los datos de entrenamiento y test. (Las funciones rmse y r_quared pueden ser utiles)
+* Graficar las predicciones (eje x) vs el valor real (cty) en el mpg_test.
+* Crear un plan de validación cruzada
+
+
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
